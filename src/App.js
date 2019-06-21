@@ -1,15 +1,8 @@
 import React from "react";
 import Todos from "./Todos";
 import NewTodo from "./NewTodo";
+import { addTodo, toggleTodo } from "./actions";
 import { connect } from "react-redux";
-
-const newTodoIndex = (() => {
-  let count = 0;
-  const inc = () => {
-    return count++;
-  };
-  return inc;
-})();
 
 const mapStateToProps = state => {
   return {
@@ -20,18 +13,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onTodoClick: id => {
-      dispatch({
-        type: "TOGGLE",
-        id
-      });
+      dispatch(toggleTodo(id));
     },
     onNewTodoClick: input => {
       if (input.value !== "") {
-        dispatch({
-          type: "ADD",
-          text: input.value,
-          id: newTodoIndex()
-        });
+        dispatch(addTodo(input.value));
       }
       input.value = "";
     }
