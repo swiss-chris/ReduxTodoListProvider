@@ -29,3 +29,37 @@ test("Add todo", () => {
     }
   ]);
 });
+
+test("Add 2 todos and toggle", () => {
+  wrapper.find("input").instance().value = "abc";
+  wrapper.find("input").instance().value = "cde";
+  wrapper.find("button").simulate("click");
+  expect(store.getState()).toEqual([
+    {
+      id: 0,
+      text: "abc",
+      completed: false
+    },
+    {
+      id: 1,
+      text: "cde",
+      completed: false
+    }
+  ]);
+  wrapper
+    .find("li")
+    .filterWhere(n => n.text() === "abc")
+    .simulate("click");
+  expect(store.getState()).toEqual([
+    {
+      id: 0,
+      text: "abc",
+      completed: true
+    },
+    {
+      id: 1,
+      text: "cde",
+      completed: false
+    }
+  ]);
+});
