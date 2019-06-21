@@ -1,6 +1,6 @@
 import expect from "expect";
 import deepFreeze from "deep-freeze";
-import reducer from "../reducer";
+import reducer from "../reducers/reducer";
 
 const todo = {
   text: "existing Todo Text",

@@ -1,8 +1,9 @@
 import React from "react";
+import { connect } from "react-redux";
+
 import Todos from "./Todos";
 import NewTodo from "./NewTodo";
-import { addTodo, toggleTodo } from "./actions";
-import { connect } from "react-redux";
+import { addTodo, toggleTodo } from "../actions";
 
 const mapStateToProps = state => {
   return {

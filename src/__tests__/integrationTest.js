@@ -3,8 +3,8 @@ import { createStore } from "redux";
 import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 
-import App from "../App";
-import reducer from "../reducer";
+import App from "../components/App";
+import reducer from "../reducers/reducer";
 
 Enzyme.configure({ adapter: new Adapter() });
 
