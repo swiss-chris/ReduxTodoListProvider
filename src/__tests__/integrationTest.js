@@ -62,4 +62,24 @@ test("Add 2 todos and toggle", () => {
       completed: false
     }
   ]);
+  wrapper
+    .find("li")
+    .filterWhere(n => n.text() === "abc")
+    .simulate("click");
+  wrapper
+    .find("li")
+    .filterWhere(n => n.text() === "cde")
+    .simulate("click");
+  expect(store.getState()).toEqual([
+    {
+      id: 0,
+      text: "abc",
+      completed: false
+    },
+    {
+      id: 1,
+      text: "cde",
+      completed: true
+    }
+  ]);
 });
