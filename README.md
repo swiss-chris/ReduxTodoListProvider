@@ -1,2 +1,0 @@
-# ReduxTodoListProvider
-Created with CodeSandbox
