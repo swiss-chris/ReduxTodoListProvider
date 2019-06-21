@@ -1,26 +1,5 @@
 import React from "react";
 
-const newTodoIndex = (() => {
-  let count = 0;
-
-  const inc = () => {
-    return count++;
-  };
-
-  return inc;
-})();
-
-const handleNewTodoClick = (store, input, id) => {
-  if (input.value !== "") {
-    store.dispatch({
-      type: "ADD",
-      text: input.value,
-      id
-    });
-  }
-  input.value = "";
-};
-
 class NewTodo extends React.Component {
   render() {
     return (
@@ -31,17 +10,11 @@ class NewTodo extends React.Component {
           }}
           onKeyDown={e => {
             if (e.key === "Enter") {
-              handleNewTodoClick(this.props.store, this.input, newTodoIndex());
+              this.props.onClick(this.input);
             }
           }}
         />
-        <button
-          onClick={() =>
-            handleNewTodoClick(this.props.store, this.input, newTodoIndex())
-          }
-        >
-          ADD
-        </button>
+        <button onClick={() => this.props.onClick(this.input)}>ADD</button>
       </div>
     );
   }

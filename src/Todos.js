@@ -1,25 +1,12 @@
 import React from "react";
 import Todo from "./Todo";
 
-const handleTodoClick = (store, id) => {
-  console.log("test");
-
-  store.dispatch({
-    type: "TOGGLE",
-    id
-  });
-};
-
-const Todos = ({ store }) => {
+const Todos = ({ todos, onClick }) => {
   return (
     <ul>
-      {store.getState().map(todo => {
+      {todos.map(todo => {
         return (
-          <Todo
-            key={todo.id}
-            onClick={() => handleTodoClick(store, todo.id)}
-            {...todo}
-          />
+          <Todo key={todo.id} onClick={() => onClick(todo.id)} {...todo} />
         );
       })}
     </ul>
