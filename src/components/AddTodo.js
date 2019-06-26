@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import { addTodo } from "../actions";
 
-const AddTodo = ({ onNewTodoClick }) => {
+const AddTodo = ({ dispatch }) => {
   let input;
 
   return (
@@ -12,23 +12,20 @@ const AddTodo = ({ onNewTodoClick }) => {
         ref={node => (input = node)}
         onKeyDown={e => {
           if (e.key === "Enter") {
-            onNewTodoClick(input);
+            onNewTodoClick(dispatch, input);
           }
         }}
       />
-      <button onClick={() => onNewTodoClick(input)}>ADD</button>
+      <button onClick={() => onNewTodoClick(dispatch, input)}>ADD</button>
     </div>
   );
 };
 
-export default connect(
-  undefined,
-  dispatch => ({
-    onNewTodoClick: input => {
-      if (input.value !== "") {
-        dispatch(addTodo(input.value));
-      }
-      input.value = "";
-    }
-  })
-)(AddTodo);
+const onNewTodoClick = (dispatch, input) => {
+  if (input.value !== "") {
+    dispatch(addTodo(input.value));
+  }
+  input.value = "";
+};
+
+export default connect()(AddTodo);
