@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import { addTodo } from "../actions";
 
-const NewTodo = ({ onNewTodoClick }) => {
+const AddTodo = ({ onNewTodoClick }) => {
   let input;
 
   return (
@@ -31,4 +31,4 @@ export default connect(
       input.value = "";
     }
   })
-)(NewTodo);
+)(AddTodo);
