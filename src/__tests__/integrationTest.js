@@ -1,5 +1,7 @@
 import React from "react";
 import { createStore } from "redux";
+import { Provider } from "react-redux";
+
 import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 
@@ -11,7 +13,11 @@ Enzyme.configure({ adapter: new Adapter() });
 const store = createStore(reducer);
 
 export default function renderAppWithState() {
-  const wrapper = Enzyme.mount(<App store={store} />);
+  const wrapper = Enzyme.mount(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
   return [store, wrapper];
 }
 

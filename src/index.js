@@ -18,5 +18,3 @@ ReactDom.render(
   </Provider>,
   document.getElementById("app")
 );
-
-export default { reducer };
