@@ -12,16 +12,11 @@ Enzyme.configure({ adapter: new Adapter() });
 
 const store = createStore(reducer);
 
-export default function renderAppWithState() {
-  const wrapper = Enzyme.mount(
-    <Provider store={store}>
-      <App />
-    </Provider>
-  );
-  return [store, wrapper];
-}
-
-const [, wrapper] = renderAppWithState();
+const wrapper = Enzyme.mount(
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
 
 test("Add todo", () => {
   wrapper.find("input").instance().value = "abc";
