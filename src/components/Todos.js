@@ -4,20 +4,6 @@ import { connect } from "react-redux";
 import Todo from "../containers/Todo";
 import { toggleTodo } from "../actions";
 
-const mapStateToProps = state => {
-  return {
-    todos: state
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onTodoClick: id => {
-      dispatch(toggleTodo(id));
-    }
-  };
-};
-
 const Todos = ({ todos, onTodoClick }) => {
   return (
     <ul>
@@ -31,6 +17,12 @@ const Todos = ({ todos, onTodoClick }) => {
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  state => ({
+    todos: state
+  }),
+  dispatch => ({
+    onTodoClick: id => {
+      dispatch(toggleTodo(id));
+    }
+  })
 )(Todos);

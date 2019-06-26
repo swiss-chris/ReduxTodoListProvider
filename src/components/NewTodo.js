@@ -1,15 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { addTodo } from "../actions";
 
-const mapDispatchToProps = dispatch => ({
-  onNewTodoClick: input => {
-    if (input.value !== "") {
-      dispatch(addTodo(input.value));
-    }
-    input.value = "";
-  }
-});
+import { addTodo } from "../actions";
 
 const NewTodo = ({ onNewTodoClick }) => {
   let input;
@@ -31,5 +23,12 @@ const NewTodo = ({ onNewTodoClick }) => {
 
 export default connect(
   undefined,
-  mapDispatchToProps
+  dispatch => ({
+    onNewTodoClick: input => {
+      if (input.value !== "") {
+        dispatch(addTodo(input.value));
+      }
+      input.value = "";
+    }
+  })
 )(NewTodo);
