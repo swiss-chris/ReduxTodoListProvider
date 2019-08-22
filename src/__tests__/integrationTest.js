@@ -24,15 +24,29 @@ beforeEach(() => {
 
 //// -------------------- ////
 
-test("Add todo", () => {
-  appWrapper.find("input").instance().value = "abc";
-  expect(appWrapper.find("input").instance().value).toEqual("abc");
+test("Add todo with Button", () => {
+  appWrapper.find("input").instance().value = "withButton";
+  expect(appWrapper.find("input").instance().value).toEqual("withButton");
 
   appWrapper.find("button").simulate("click");
   expect(store.getState()).toEqual([
     {
       id: 0,
-      text: "abc",
+      text: "withButton",
+      completed: false
+    }
+  ]);
+});
+
+test("Add todo with Enter Key", () => {
+  appWrapper.find("input").instance().value = "withEnter";
+  expect(appWrapper.find("input").instance().value).toEqual("withEnter");
+
+  appWrapper.find("input").simulate("keyDown", {key: "Enter"});
+  expect(store.getState()).toEqual([
+    {
+      id: 0,
+      text: "withEnter",
       completed: false
     }
   ]);
@@ -40,14 +54,14 @@ test("Add todo", () => {
 
 test("Add 2 todos and toggle", () => {
 
-  appWrapper.find("input").instance().value = "123";
+  appWrapper.find("input").instance().value = "abc";
   appWrapper.find("button").simulate("click");
   appWrapper.find("input").instance().value = "cde";
   appWrapper.find("button").simulate("click");
   expect(store.getState()).toEqual([
     {
       id: 0,
-      text: "123",
+      text: "abc",
       completed: false
     },
     {
@@ -59,12 +73,12 @@ test("Add 2 todos and toggle", () => {
 
   appWrapper
     .find("li")
-    .filterWhere(n => n.text() === "123")
+    .filterWhere(n => n.text() === "abc")
     .simulate("click");
   expect(store.getState()).toEqual([
     {
       id: 0,
-      text: "123",
+      text: "abc",
       completed: true
     },
     {
@@ -76,7 +90,7 @@ test("Add 2 todos and toggle", () => {
 
   appWrapper
     .find("li")
-    .filterWhere(n => n.text() === "123")
+    .filterWhere(n => n.text() === "abc")
     .simulate("click");
   appWrapper
     .find("li")
@@ -85,7 +99,7 @@ test("Add 2 todos and toggle", () => {
   expect(store.getState()).toEqual([
     {
       id: 0,
-      text: "123",
+      text: "abc",
       completed: false
     },
     {
