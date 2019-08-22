@@ -2,20 +2,23 @@ import React from "react";
 import { createStore } from "redux";
 import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
+import uuid from 'uuid/v4';
 
 import App from "../App";
 import reducer from "../reducer";
 
+jest.mock('uuid/v4');
+
 Enzyme.configure({ adapter: new Adapter() });
 
-const store = createStore(reducer);
-
-const wrapper = Enzyme.mount(<App store={store} />);
-
 test("Add todo", () => {
-  wrapper.find("input").instance().value = "abc";
-  expect(wrapper.find("input").instance().value).toEqual("abc");
-  wrapper.find("button").simulate("click");
+  initUuidMock();
+
+  const { appWrapper, store } = initAppWrapper();
+
+  appWrapper.find("input").instance().value = "abc";
+  expect(appWrapper.find("input").instance().value).toEqual("abc");
+  appWrapper.find("button").simulate("click");
   expect(store.getState()).toEqual([
     {
       id: 0,
@@ -26,13 +29,18 @@ test("Add todo", () => {
 });
 
 test("Add 2 todos and toggle", () => {
-  wrapper.find("input").instance().value = "abc";
-  wrapper.find("input").instance().value = "cde";
-  wrapper.find("button").simulate("click");
+  initUuidMock();
+
+  const { appWrapper, store } = initAppWrapper();
+
+  appWrapper.find("input").instance().value = "123";
+  appWrapper.find("button").simulate("click");
+  appWrapper.find("input").instance().value = "cde";
+  appWrapper.find("button").simulate("click");
   expect(store.getState()).toEqual([
     {
       id: 0,
-      text: "abc",
+      text: "123",
       completed: false
     },
     {
@@ -41,14 +49,14 @@ test("Add 2 todos and toggle", () => {
       completed: false
     }
   ]);
-  wrapper
+  appWrapper
     .find("li")
-    .filterWhere(n => n.text() === "abc")
+    .filterWhere(n => n.text() === "123")
     .simulate("click");
   expect(store.getState()).toEqual([
     {
       id: 0,
-      text: "abc",
+      text: "123",
       completed: true
     },
     {
@@ -57,18 +65,18 @@ test("Add 2 todos and toggle", () => {
       completed: false
     }
   ]);
-  wrapper
+  appWrapper
     .find("li")
-    .filterWhere(n => n.text() === "abc")
+    .filterWhere(n => n.text() === "123")
     .simulate("click");
-  wrapper
+  appWrapper
     .find("li")
     .filterWhere(n => n.text() === "cde")
     .simulate("click");
   expect(store.getState()).toEqual([
     {
       id: 0,
-      text: "abc",
+      text: "123",
       completed: false
     },
     {
@@ -78,3 +86,20 @@ test("Add 2 todos and toggle", () => {
     }
   ]);
 });
+
+function initAppWrapper() {
+  const store = createStore(reducer);
+  const appWrapper = Enzyme.mount(<App store={store} />);
+  return { appWrapper, store };
+}
+
+function initUuidMock() {
+  const newTodoIndex = (() => {
+    let count = 0;
+    const inc = () => {
+      return count++;
+    };
+    return inc;
+  })();
+  uuid.mockImplementation(newTodoIndex);
+}

@@ -1,14 +1,5 @@
 import React from "react";
-
-const newTodoIndex = (() => {
-  let count = 0;
-
-  const inc = () => {
-    return count++;
-  };
-
-  return inc;
-})();
+import { v4 } from 'uuid';
 
 const handleNewTodoClick = (store, input, id) => {
   if (input.value !== "") {
@@ -31,13 +22,13 @@ class NewTodo extends React.Component {
           }}
           onKeyDown={e => {
             if (e.key === "Enter") {
-              handleNewTodoClick(this.props.store, this.input, newTodoIndex());
+              handleNewTodoClick(this.props.store, this.input, v4());
             }
           }}
         />
         <button
           onClick={() =>
-            handleNewTodoClick(this.props.store, this.input, newTodoIndex())
+            handleNewTodoClick(this.props.store, this.input, v4())
           }
         >
           ADD
