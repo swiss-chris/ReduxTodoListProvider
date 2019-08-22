@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDom from "react-dom";
 import { createStore } from "redux";
-import reducer from "./reducer";
-import App from "./App";
+import { reducer } from "./reducers/reducer";
+import App from "./components/App";
 
 const store = createStore(
   reducer,
