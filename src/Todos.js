@@ -2,8 +2,6 @@ import React from "react";
 import Todo from "./Todo";
 
 const handleTodoClick = (store, id) => {
-  console.log("test");
-
   store.dispatch({
     type: "TOGGLE",
     id
