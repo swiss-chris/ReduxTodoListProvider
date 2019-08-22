@@ -7,17 +7,27 @@ import uuid from 'uuid/v4';
 import App from "../App";
 import reducer from "../reducer";
 
+//// -------------------- ////
+
 jest.mock('uuid/v4');
 
 Enzyme.configure({ adapter: new Adapter() });
 
+let appWrapper, store;
+
+//// -------------------- ////
+
+beforeEach(() => {
+  initUuidMock(); // start over at ID=0 for every test
+  ({ appWrapper, store } = initAppWrapper()); // start each test with an empty store
+});
+
+//// -------------------- ////
+
 test("Add todo", () => {
-  initUuidMock();
-
-  const { appWrapper, store } = initAppWrapper();
-
   appWrapper.find("input").instance().value = "abc";
   expect(appWrapper.find("input").instance().value).toEqual("abc");
+
   appWrapper.find("button").simulate("click");
   expect(store.getState()).toEqual([
     {
@@ -29,9 +39,6 @@ test("Add todo", () => {
 });
 
 test("Add 2 todos and toggle", () => {
-  initUuidMock();
-
-  const { appWrapper, store } = initAppWrapper();
 
   appWrapper.find("input").instance().value = "123";
   appWrapper.find("button").simulate("click");
@@ -49,6 +56,7 @@ test("Add 2 todos and toggle", () => {
       completed: false
     }
   ]);
+
   appWrapper
     .find("li")
     .filterWhere(n => n.text() === "123")
@@ -65,6 +73,7 @@ test("Add 2 todos and toggle", () => {
       completed: false
     }
   ]);
+
   appWrapper
     .find("li")
     .filterWhere(n => n.text() === "123")
@@ -87,6 +96,8 @@ test("Add 2 todos and toggle", () => {
   ]);
 });
 
+//// -------------------- ////
+
 function initAppWrapper() {
   const store = createStore(reducer);
   const appWrapper = Enzyme.mount(<App store={store} />);
@@ -94,12 +105,13 @@ function initAppWrapper() {
 }
 
 function initUuidMock() {
-  const newTodoIndex = (() => {
+  const increment = (() => {
     let count = 0;
     const inc = () => {
       return count++;
     };
     return inc;
   })();
-  uuid.mockImplementation(newTodoIndex);
+
+  uuid.mockImplementation(increment);
 }
