@@ -1,21 +1,17 @@
 import React from "react";
-import Todo from "./Todo";
+import { connect } from "react-redux";
 
-const handleTodoClick = (store, id) => {
-  store.dispatch({
-    type: "TOGGLE",
-    id
-  });
-};
+import Todo from "../containers/Todo";
+import { toggleTodo } from "../actions";
 
-const Todos = ({ store }) => {
+const Todos = ({ todos, dispatch }) => {
   return (
     <ul>
-      {store.getState().map(todo => {
+      {todos.map(todo => {
         return (
           <Todo
             key={todo.id}
-            onClick={() => handleTodoClick(store, todo.id)}
+            onClick={() => dispatch(toggleTodo(todo.id))}
             {...todo}
           />
         );
@@ -24,4 +20,9 @@ const Todos = ({ store }) => {
   );
 };
 
-export default Todos;
+export default connect(
+  state => ({
+    todos: state
+  }),
+  null
+)(Todos);

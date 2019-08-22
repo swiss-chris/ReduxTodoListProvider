@@ -1,5 +1,6 @@
 import React from "react";
 import { createStore } from "redux";
+import { Provider } from "react-redux";
 import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import uuid from 'uuid/v4';
@@ -88,7 +89,7 @@ test("Add 2 todos and toggle", () => {
     }
   ]);
 
-  appWrapper
+  appWrapper 
     .find("li")
     .filterWhere(n => n.text() === "abc")
     .simulate("click");
@@ -114,7 +115,11 @@ test("Add 2 todos and toggle", () => {
 
 function initAppWrapper() {
   const store = createStore(reducer);
-  const appWrapper = Enzyme.mount(<App store={store} />);
+  const appWrapper = Enzyme.mount(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
   return { appWrapper, store };
 }
 

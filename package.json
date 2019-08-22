@@ -1,5 +1,5 @@
 {
-  "name": "redux-todo-list-integration-test",
+  "name": "redux-todo-list",
   "version": "1.0.0",
   "description": "",
   "main": "index.html",
@@ -9,11 +9,9 @@
     "test": "jest --watch"
   },
   "dependencies": {
-    "deep-freeze": "0.0.1",
-    "enzyme": "3.10.0",
-    "enzyme-adapter-react-16": "1.14.0",
     "react": "16.8.6",
     "react-dom": "16.8.6",
+    "react-redux": "7.1.0",
     "redux": "4.0.1",
     "uuid": "^3.3.3"
   },
@@ -23,6 +21,9 @@
     "@babel/preset-react": "^7.0.0",
     "@types/uuid": "^3.4.5",
     "babel-jest": "^24.9.0",
+    "deep-freeze": "0.0.1",
+    "enzyme": "3.10.0",
+    "enzyme-adapter-react-16": "1.14.0",
     "expect": "^24.9.0",
     "jest": "^24.9.0",
     "parcel-bundler": "^1.6.1"
